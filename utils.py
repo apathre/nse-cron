@@ -24,8 +24,7 @@ print("GOOGLE_CLIENT_EMAIL:", os.getenv('GOOGLE_CLIENT_EMAIL'))
 print("GOOGLE_TOKEN_URI:", os.getenv('GOOGLE_TOKEN_URI'))
 
 # Create a dictionary that represents the credentials
-credentials_info = 
-{
+credentials_info = {
     "type": "service_account",
     "project_id": os.getenv('GOOGLE_PROJECT_ID'),
     "private_key_id": os.getenv('GOOGLE_PROJECT_KEY_ID'),
