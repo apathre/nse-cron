@@ -16,9 +16,16 @@ load_dotenv()
 # Define the correct scopes
 scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
 
+# Print environment variables for debugging
+print("GOOGLE_PROJECT_ID:", os.getenv('GOOGLE_PROJECT_ID'))
+print("GOOGLE_PROJECT_KEY_ID:", os.getenv('GOOGLE_PROJECT_KEY_ID'))
+print("GOOGLE_PRIVATE_KEY:", os.getenv('GOOGLE_PRIVATE_KEY'))
+print("GOOGLE_CLIENT_EMAIL:", os.getenv('GOOGLE_CLIENT_EMAIL'))
+print("GOOGLE_TOKEN_URI:", os.getenv('GOOGLE_TOKEN_URI'))
 
 # Create a dictionary that represents the credentials
-credentials_info = {
+credentials_info = 
+{
     "type": "service_account",
     "project_id": os.getenv('GOOGLE_PROJECT_ID'),
     "private_key_id": os.getenv('GOOGLE_PROJECT_KEY_ID'),
@@ -31,6 +38,7 @@ credentials_info = {
     "client_x509_cert_url": "your-client-x509-cert-url",
     "universe_domain": "googleapis.com"
 }
+
 
 print("info:", credentials_info)
   
