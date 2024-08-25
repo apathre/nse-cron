@@ -32,7 +32,7 @@ credentials_info = {
     "universe_domain": "googleapis.com"
 }
 
-#print(credentials_info)
+print(credentials_info)
   
 
 # Initialize credentials using the dictionary
