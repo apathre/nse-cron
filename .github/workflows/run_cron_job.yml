@@ -23,7 +23,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run your Python script
+    - name: Run script
       env:
         GOOGLE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
         GOOGLE_PROJECT_KEY_ID: ${{ secrets.GOOGLE_PROJECT_KEY_ID }}
@@ -31,4 +31,4 @@ jobs:
         GOOGLE_CLIENT_EMAIL: ${{ secrets.GOOGLE_CLIENT_EMAIL }}
         GOOGLE_TOKEN_URI: ${{ secrets.GOOGLE_TOKEN_URI }}
       run: |
-        python main.py
+        python scripts/main.py

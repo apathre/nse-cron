@@ -1,7 +1,5 @@
 yfinance
 pandas
-APScheduler
-Flask
 gspread
 oauth2client
 python-dotenv

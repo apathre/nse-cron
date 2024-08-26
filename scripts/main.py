@@ -1,11 +1,10 @@
 import json
 import yfinance as yf
-from apscheduler.schedulers.background import BackgroundScheduler
-from flask import Flask, jsonify
+#from flask import Flask, jsonify
 from scripts.utils import calculate_emas, check_crossover, send_email_alert, add_row_to_google_sheets
 
 
-app = Flask(__name__)
+#app = Flask(__name__)
 
 # Load stock list
 with open('stocks.json', 'r') as f:
@@ -20,7 +19,7 @@ def filter_stocks():
     long_ema_list = []
 
     for stock in stock_list:
-        data = yf.download(stock, period='1d', interval='5m')
+        data = yf.download(stock, period='5d', interval='4h')
         short_emas, long_emas = calculate_emas(data, short_periods, long_periods)
 
         if check_crossover(short_emas, long_emas):
@@ -34,7 +33,7 @@ def filter_stocks():
 def job():
     filtered_stocks, stock_data, short_emas, long_emas = filter_stocks()
     if filtered_stocks:
-        #send_email_alert(filtered_stocks, stock_data, short_emas, long_emas)
+        
         #print("data after filter: ", filtered_stocks,stock_data)
         for stock, data, short_ema_set, long_ema_set in zip(filtered_stocks, stock_data, short_emas, long_emas):
             row_data = [
@@ -51,11 +50,8 @@ def job():
             
             # Add row to Google Sheets with timestamp
             add_row_to_google_sheets(row_data)
+        #send_email_alert(filtered_stocks, stock_data, short_emas, long_emas)
 
-scheduler = BackgroundScheduler()
-scheduler.add_job(job,'interval',minutes=3)
-#scheduler.add_job(job, 'cron', day_of_week='mon-fri', hour='9,10,13,15')
-scheduler.start()
 
 @app.route('/run', methods=['GET'])
 def run():
@@ -67,4 +63,4 @@ def home():
     return("Welcome to GMMA trading app")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    job()
