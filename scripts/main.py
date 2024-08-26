@@ -1,7 +1,7 @@
 import json
 import yfinance as yf
 #from flask import Flask, jsonify
-from scripts.utils import calculate_emas, check_crossover, send_email_alert, add_row_to_google_sheets
+from utils import calculate_emas, check_crossover, send_email_alert, add_row_to_google_sheets
 
 
 #app = Flask(__name__)
