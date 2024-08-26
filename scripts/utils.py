@@ -19,13 +19,13 @@ scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis
 # Print environment variables for debugging
 print("GOOGLE_PROJECT_ID:", os.getenv('GOOGLE_PROJECT_ID'))
 print("GOOGLE_PROJECT_KEY_ID:", os.getenv('GOOGLE_PROJECT_KEY_ID'))
-print("GOOGLE_PRIVATE_KEY:", os.getenv('GOOGLE_PRIVATE_KEY'))
+print("GOOGLE_PRIVATE_KEY:", os.getenv('GOOGLE_PRIVATE_KEY')).replace('\\n', '\n')
 print("GOOGLE_CLIENT_EMAIL:", os.getenv('GOOGLE_CLIENT_EMAIL'))
 print("GOOGLE_TOKEN_URI:", os.getenv('GOOGLE_TOKEN_URI'))
 
 # Create a dictionary that represents the credentials
 credentials_info = {
-    "private_key": os.getenv('GOOGLE_PRIVATE_KEY'),
+    "private_key": os.getenv('GOOGLE_PRIVATE_KEY').replace('\\n', '\n'),
     "type": "service_account",
     "project_id": os.getenv('GOOGLE_PROJECT_ID'),
     "private_key_id": os.getenv('GOOGLE_PROJECT_KEY_ID'),
