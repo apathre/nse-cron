@@ -1,5 +1,6 @@
 yfinance
 pandas
+Flask
 gspread
 oauth2client
 python-dotenv

@@ -1,10 +1,10 @@
 import json
 import yfinance as yf
-#from flask import Flask, jsonify
+from flask import Flask, jsonify
 from utils import calculate_emas, check_crossover, send_email_alert, add_row_to_google_sheets
 
 
-#app = Flask(__name__)
+app = Flask(__name__)
 
 # Load stock list
 with open('scripts/stocks.json', 'r') as f:
