@@ -19,14 +19,31 @@ def filter_stocks():
     long_ema_list = []
 
     for stock in stock_list:
-        data = yf.download(stock, period='5d', interval='4h')
-        short_emas, long_emas = calculate_emas(data, short_periods, long_periods)
+        try:
+            data = yf.download(stock, period='5d', interval='60m')
+            data = data.resample('4H').agg({
+                'Open': 'first',
+                'High': 'max',
+                'Low': 'min',
+                'Close': 'last',
+                'Volume': 'sum'
+            }).dropna()
+            
+            if data.empty:
+                print(f"No data available for {stock}. Skipping.")
+                continue
+        
+            short_emas, long_emas = calculate_emas(data, short_periods, long_periods)
 
-        if check_crossover(short_emas, long_emas):
-            filtered_stocks.append(stock)
-            stock_data_list.append(data)
-            short_ema_list.append(short_emas)
-            long_ema_list.append(long_emas)
+            if check_crossover(short_emas, long_emas):
+                filtered_stocks.append(stock)
+                stock_data_list.append(data)
+                short_ema_list.append(short_emas)
+                long_ema_list.append(long_emas)
+
+        except Exception as e:
+            print(f"Error processing {stock}: {e}")
+
 
     return filtered_stocks, stock_data_list, short_ema_list, long_ema_list
 
