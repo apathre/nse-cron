@@ -28,12 +28,12 @@ credentials_info = {
     "type": "service_account",
     "project_id": os.getenv('GOOGLE_PROJECT_ID'),
     "private_key_id": os.getenv('GOOGLE_PROJECT_KEY_ID'),
-    "private_key": os.getenv('GOOGLE_PRIVATE_KEY'),
     "client_email": os.getenv('GOOGLE_CLIENT_EMAIL'),
     "client_id": "100932991345744246437",
     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
     "token_uri": os.getenv('GOOGLE_TOKEN_URI'),
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "private_key": os.getenv('GOOGLE_PRIVATE_KEY'),
     "client_x509_cert_url": "your-client-x509-cert-url",
     "universe_domain": "googleapis.com"
 }
