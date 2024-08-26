@@ -16,16 +16,24 @@ load_dotenv()
 # Define the correct scopes
 scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
 
+# Fetch the private key and handle the case where it's missing
+private_key = os.getenv('GOOGLE_PRIVATE_KEY')
+if private_key is None:
+    raise ValueError("The GOOGLE_PRIVATE_KEY environment variable is not set or is incorrect.")
+
+# Replace \n with actual newlines
+private_key = private_key.replace('\\n', '\n')
+
 # Print environment variables for debugging
-print("GOOGLE_PROJECT_ID:", os.getenv('GOOGLE_PROJECT_ID'))
-print("GOOGLE_PROJECT_KEY_ID:", os.getenv('GOOGLE_PROJECT_KEY_ID'))
-print("GOOGLE_PRIVATE_KEY:", os.getenv('GOOGLE_PRIVATE_KEY')).replace('\\n', '\n')
-print("GOOGLE_CLIENT_EMAIL:", os.getenv('GOOGLE_CLIENT_EMAIL'))
-print("GOOGLE_TOKEN_URI:", os.getenv('GOOGLE_TOKEN_URI'))
+#print("GOOGLE_PROJECT_ID:", os.getenv('GOOGLE_PROJECT_ID'))
+#print("GOOGLE_PROJECT_KEY_ID:", os.getenv('GOOGLE_PROJECT_KEY_ID'))
+print("GOOGLE_PRIVATE_KEY:", private_key)
+#print("GOOGLE_CLIENT_EMAIL:", os.getenv('GOOGLE_CLIENT_EMAIL'))
+#print("GOOGLE_TOKEN_URI:", os.getenv('GOOGLE_TOKEN_URI'))
 
 # Create a dictionary that represents the credentials
 credentials_info = {
-    "private_key": os.getenv('GOOGLE_PRIVATE_KEY').replace('\\n', '\n'),
+    "private_key": private_key,
     "type": "service_account",
     "project_id": os.getenv('GOOGLE_PROJECT_ID'),
     "private_key_id": os.getenv('GOOGLE_PROJECT_KEY_ID'),
@@ -38,8 +46,10 @@ credentials_info = {
     "universe_domain": "googleapis.com"
 }
 
-
-print("info:", credentials_info)
+print("Environment Variables:")
+for key, value in os.environ.items():
+    print(f"{key}: {value}")
+#print("info:", credentials_info)
   
 
 # Initialize credentials using the dictionary
