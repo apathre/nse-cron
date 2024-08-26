@@ -2,7 +2,7 @@ import json
 import yfinance as yf
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, jsonify
-from utils import calculate_emas, check_crossover, send_email_alert, add_row_to_google_sheets
+from scripts.utils import calculate_emas, check_crossover, send_email_alert, add_row_to_google_sheets
 
 
 app = Flask(__name__)
