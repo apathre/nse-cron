@@ -47,8 +47,8 @@ credentials_info = {
 }
 
 print("Environment Variables:")
-for key, value in os.environ.items():
-    print(f"{key}: {value}")
+#for key, value in os.environ.items():
+#    print(f"{key}: {value}")
 #print("info:", credentials_info)
   
 
