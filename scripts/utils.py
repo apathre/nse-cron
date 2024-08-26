@@ -9,6 +9,7 @@ from email.mime.multipart import MIMEMultipart
 from dotenv import load_dotenv
 import os
 from google.oauth2.service_account import Credentials
+import time
 
 # Load environment variables from .env file
 load_dotenv()
@@ -103,25 +104,43 @@ def convert_data_types(data):
     return [int(x) if isinstance(x, np.integer) else float(x) if isinstance(x, np.floating) else x for x in data]
 
 def add_row_to_google_sheets(data):
-    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+    #scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
     #creds = ServiceAccountCredentials.from_json_keyfile_name("google_sheets_credentials.json", scope)
+    
+    max_retries = 5
+    retry_delay = 1  # Start with 1 second
     client = gspread.authorize(creds)
 
-    try:
-        sheet = client.open("GMMA trading sheet").sheet1
-    except gspread.SpreadsheetNotFound:
-        print("Spreadsheet not found. Please check the name and sharing permissions.")
-        return
+    for attempt in range(max_retries):
+        try:
+            sheet = client.open("GMMA trading sheet").sheet1
+            
+            # Get current date and time
+            current_date = datetime.now().strftime('%Y-%m-%d')
+            current_time = datetime.now().strftime('%H:%M:%S')
 
-    # Get current date and time
-    current_date = datetime.now().strftime('%Y-%m-%d')
-    current_time = datetime.now().strftime('%H:%M:%S')
+            # Prepend the date and time to the data
+            data_with_timestamp = [current_date, current_time] + data
+            
+            # Convert data types to native Python types
+            data_with_timestamp = convert_data_types(data_with_timestamp)
 
-    # Prepend the date and time to the data
-    data_with_timestamp = [current_date, current_time] + data
-    #print("data before sent og gsheet: ",data)
-    # Convert data types to native Python types
-    data_with_timestamp = convert_data_types(data_with_timestamp)
+            # Add data row to Google Sheet
+            sheet.append_row(data_with_timestamp)
+            print("Row added successfully")
+            return
 
-    # Add data row to Google Sheet
-    sheet.append_row(data_with_timestamp)
+        except gspread.exceptions.APIError as e:
+            if e.response.status_code == 429:
+                print(f"Quota exceeded, retrying in {retry_delay} seconds...")
+                time.sleep(retry_delay)
+                retry_delay *= 2  # Exponential backoff
+            else:
+                print(f"API Error: {e}")
+                return
+        except gspread.SpreadsheetNotFound:
+            print("Spreadsheet not found. Please check the name and sharing permissions.")
+            return
+        except Exception as e:
+            print(f"Unexpected error: {e}")
+            return
