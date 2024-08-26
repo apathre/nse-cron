@@ -7,7 +7,7 @@ from utils import calculate_emas, check_crossover, send_email_alert, add_row_to_
 #app = Flask(__name__)
 
 # Load stock list
-with open('stocks.json', 'r') as f:
+with open('scripts/stocks.json', 'r') as f:
     stock_list = json.load(f)['stocks']
 
 def filter_stocks():
