@@ -28,7 +28,7 @@ private_key = private_key.replace('\\n', '\n')
 # Print environment variables for debugging
 #print("GOOGLE_PROJECT_ID:", os.getenv('GOOGLE_PROJECT_ID'))
 #print("GOOGLE_PROJECT_KEY_ID:", os.getenv('GOOGLE_PROJECT_KEY_ID'))
-print("GOOGLE_PRIVATE_KEY:", private_key)
+#print("GOOGLE_PRIVATE_KEY:", private_key)
 #print("GOOGLE_CLIENT_EMAIL:", os.getenv('GOOGLE_CLIENT_EMAIL'))
 #print("GOOGLE_TOKEN_URI:", os.getenv('GOOGLE_TOKEN_URI'))
 
@@ -47,7 +47,7 @@ credentials_info = {
     "universe_domain": "googleapis.com"
 }
 
-print("Environment Variables:")
+#print("Environment Variables:")
 #for key, value in os.environ.items():
 #    print(f"{key}: {value}")
 #print("info:", credentials_info)
